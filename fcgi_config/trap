@@ -1,0 +1,17 @@
+#!/bin/bash
+set -euo pipefail
+
+. "/usr/local/bin/fcgi_util/fcgi_config/perm"
+
+function cleanup () {
+   printf "\n"
+   echo "Removing temp files ..."
+   echo "Exiting ..."
+   echo $spawn_dir/${filename%%.*}.sock
+   [[ ! -z "${filename+x}" ]] && rm -rf "$spawn_dir/${filename%%.*}.sock"
+   set +eu
+   set +o pipefail
+}
+
+trap cleanup EXIT
+

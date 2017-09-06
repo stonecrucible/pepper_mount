@@ -1,0 +1,22 @@
+#!/bin/bash
+data=()
+if [ -p /dev/stdin ]; then
+   while IFS= read var
+   do 
+      data+=("$var")
+   done
+fi
+
+counter=0;
+counter=$((counter + $#));
+counter=$((counter + ${#data[@]}));
+if [ $counter -lt 1  ]; then
+      echo "$0 : error : no arguments given"
+      exit 1001
+fi
+if [ $counter -gt 1  ]; then
+      echo "$0 : error : too many arguments given"
+      exit 1002
+fi
+. "/usr/local/bin/fcgi_util/fcgi_config/trap"
+ln -sf $spawn_dir/$1 $pepper_dir/app.sock

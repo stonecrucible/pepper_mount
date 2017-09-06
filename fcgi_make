@@ -1,0 +1,17 @@
+#!/bin/bash
+filename="$(basename $1)"
+pathname="$(dirname $1)"
+if [ $# -eq 0 ]; then
+   echo "$0 : error : no arguments given"
+   exit 1010
+fi
+if [ ! -e "$1" ]; then
+   echo "$0 : error : file \"$1\" does not exist"
+   exit 1011
+fi
+if [ ! -x "$1" ]; then
+   echo "$0 : error : file \"$1\" is not executable"
+   exit 1012
+fi
+. "/usr/local/bin/fcgi_util/fcgi_config/trap"
+spawn-fcgi ${1} -ns $spawn_dir/${filename%%.*}.sock

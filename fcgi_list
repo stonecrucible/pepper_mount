@@ -1,0 +1,28 @@
+#!/bin/bash
+
+. "/usr/local/bin/fcgi_util/fcgi_config/perm"
+
+flag=false
+selinux_flag=false;
+while getopts ":l:Z" opt; do
+  case $opt in
+    Z)
+      selinux_flag=true
+    ;;
+    l)
+      flag=true
+      if [ "$selinux_flag" = true   ]; then 
+         find "$spawn_dir" -iname '*.sock' | ls -Z
+      else
+         find "$spawn_dir" -iname '*.sock'
+      fi
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      ;;
+  esac
+done
+
+if [ "$flag" = true  ];then
+   [[ "$selinux_flag" = true ]] ls -1Z "$spawn_dir/*.sock" || ls -1 "$spawn_dir/*.sock" 
+fi

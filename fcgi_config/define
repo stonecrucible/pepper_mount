@@ -1,0 +1,2 @@
+spawn_dir="/run/pepper/fcgi"
+pepper_dir=$(dirname "$spawn_dir")

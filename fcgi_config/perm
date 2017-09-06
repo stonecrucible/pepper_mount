@@ -1,0 +1,23 @@
+#!/bin/bash
+
+
+. "/usr/local/bin/fcgi_util/fcgi_config/define"
+
+if [ ! -d "$spawn_dir" ]; then
+   echo "error : folder \"$spawn_dir\" does not exist"
+   exit 1000
+fi
+if [ ! -x "$spawn_dir" ]; then
+   echo "error : folder \"$spawn_dir\" is not executable"
+   exit 1001
+fi
+if [ ! -r "$spawn_dir" ];then
+   echo "error : folder \"$spawn_dir\" is not readable"
+   exit 1002
+fi
+if [ ! -w "$spawn_dir" ];then
+   echo "error : folder \"$spawn_dir\" is not writable"
+   exit 1003
+fi
+
+pepper_dir=$(dirname "$spawn_dir")
